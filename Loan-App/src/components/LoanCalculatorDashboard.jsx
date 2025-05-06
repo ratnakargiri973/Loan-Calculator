@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import { Box, Container, Grid, TextField, Typography, Button } from '@mui/material';
 import EMICalculation from '../services/EMICalculation';
 
 function LoanCalculatorDashboard() {
@@ -14,58 +13,63 @@ function LoanCalculatorDashboard() {
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-start py-10 px-4">
-      <h1 className="text-3xl font-bold mb-6">Loan Calculator Dashboard</h1>
+    <Container maxWidth="md" sx={{ py: 6 }}>
+      <Typography variant="h4" fontWeight="bold" align="center" mb={4}>
+        Loan Calculator Dashboard
+      </Typography>
 
-      <Box
-        sx={{
-          '& > :not(style)': { m: 1, width: '300px' },
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          label="Loan Amount"
-          type="number"
-          variant="outlined"
-          value={loanAmount}
-          onChange={(e) => setLoanAmount(e.target.value)}
-        />
-        <TextField
-          label="Interest Rate (%)"
-          type="number"
-          variant="outlined"
-          value={interestRate}
-          onChange={(e) => setInterestRate(e.target.value)}
-        />
-        <TextField
-          label="Term (Years)"
-          type="number"
-          variant="outlined"
-          value={termYears}
-          onChange={(e) => setTermYears(e.target.value)}
-        />
+      <Grid container spacing={2} justifyContent="center">
+        <Grid item xs={12} sm={6} md={4}>
+          <TextField
+            label="Loan Amount"
+            type="number"
+            fullWidth
+            value={loanAmount}
+            onChange={(e) => setLoanAmount(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <TextField
+            label="Interest Rate (%)"
+            type="number"
+            fullWidth
+            value={interestRate}
+            onChange={(e) => setInterestRate(e.target.value)}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6} md={4}>
+          <TextField
+            label="Term (Years)"
+            type="number"
+            fullWidth
+            value={termYears}
+            onChange={(e) => setTermYears(e.target.value)}
+          />
+        </Grid>
+      </Grid>
+
+      <Box textAlign="center" mt={4}>
+        <Button
+          variant="contained"
+          color="primary"
+          size="large"
+          onClick={handleCalculate}
+        >
+          CALCULATE
+        </Button>
       </Box>
 
-      <button
-        onClick={handleCalculate}
-        className="mt-6 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded shadow transition"
-      >
-        CALCULATE
-      </button>
-
       {showResult && (
-        <EMICalculation
-          loanAmount={loanAmount}
-          interestRate={interestRate}
-          termYears={termYears}
-          setShowResult={setShowResult}
-        />
+        <Box mt={6}>
+          <EMICalculation
+            loanAmount={loanAmount}
+            interestRate={interestRate}
+            termYears={termYears}
+            setShowResult={setShowResult}
+          />
+        </Box>
       )}
-    </div>
+    </Container>
   );
 }
 

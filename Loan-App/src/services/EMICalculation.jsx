@@ -1,6 +1,22 @@
 import React, { useState } from 'react';
 import { useThemeToggle } from '../contexts/ThemeContextProvider';
 import { useEmiCalculator } from '../hooks/useEmiCalculator';
+import {
+  Box,
+  Typography,
+  Select,
+  MenuItem,
+  Button,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  FormControl,
+  InputLabel,
+} from '@mui/material';
 
 function EMICalculation({ loanAmount, interestRate, termYears, setShowResult }) {
   const [currency, setCurrency] = useState('INR');
@@ -9,64 +25,85 @@ function EMICalculation({ loanAmount, interestRate, termYears, setShowResult }) 
 
   if (!emiData) return null;
 
-  const theadClass =
-    mode === 'dark' ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-900';
+  const tableHeaderStyle = {
+    backgroundColor: mode === 'dark' ? '#333' : '#f5f5f5',
+    color: mode === 'dark' ? '#fff' : '#000',
+    fontWeight: 'bold',
+  };
 
   return (
-    <div className="mt-8 p-6 border rounded-lg shadow-md w-full max-w-3xl">
-      <h2 className="text-xl font-semibold mb-4">EMI Calculation Summary</h2>
+    <Paper elevation={3} sx={{ p: { xs: 2, md: 4 }, borderRadius: 2 }}>
+      <Typography variant="h6" gutterBottom>
+        EMI Calculation Summary
+      </Typography>
 
-      <p className="mb-4 text-lg">
+      <Typography variant="body1" gutterBottom>
         <strong>Monthly EMI:</strong> {currency} {emiData.monthlyEmi}
-      </p>
+      </Typography>
 
-      <div className="flex justify-between items-center gap-4 mb-4 flex-wrap">
-        <select
-          id="currency"
-          value={currency}
-          onChange={(e) => setCurrency(e.target.value)}
-          className="border px-3 py-2 rounded"
-        >
-          <option value="INR">INR</option>
-          <option value="USD">USD</option>
-          <option value="EUR">EUR</option>
-          <option value="GBP">GBP</option>
-          <option value="JPY">JPY</option>
-          <option value="AUD">AUD</option>
-          <option value="CAD">CAD</option>
-        </select>
-        <button
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', sm: 'row' },
+          gap: 2,
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          mb: 2,
+        }}
+      >
+        <FormControl sx={{ minWidth: 120 }}>
+          <InputLabel>Currency</InputLabel>
+          <Select
+            value={currency}
+            label="Currency"
+            onChange={(e) => setCurrency(e.target.value)}
+          >
+            <MenuItem value="INR">INR</MenuItem>
+            <MenuItem value="USD">USD</MenuItem>
+            <MenuItem value="EUR">EUR</MenuItem>
+            <MenuItem value="GBP">GBP</MenuItem>
+            <MenuItem value="JPY">JPY</MenuItem>
+            <MenuItem value="AUD">AUD</MenuItem>
+            <MenuItem value="CAD">CAD</MenuItem>
+          </Select>
+        </FormControl>
+
+        <Button
+          variant="outlined"
+          color="secondary"
           onClick={() => setShowResult(false)}
-          className="px-4 py-2 bg-gray-200 hover:bg-gray-300 text-purple-800 rounded border border-sky-500"
         >
           RESET TABLE
-        </button>
-      </div>
+        </Button>
+      </Box>
 
-      <h2 className="text-lg font-semibold mb-2">{`Amortization Schedule (${currency})`}</h2>
-      <div className="overflow-auto max-h-96 border rounded">
-        <table className="w-full table-auto text-sm">
-          <thead className={`sticky top-0 ${theadClass}`}>
-            <tr>
-              <th className="border px-3 py-2">Month</th>
-              <th className="border px-3 py-2">Principal</th>
-              <th className="border px-3 py-2">Interest</th>
-              <th className="border px-3 py-2">Remaining Balance</th>
-            </tr>
-          </thead>
-          <tbody>
+      <Typography variant="subtitle1" sx={{ mb: 1 }}>
+        Amortization Schedule ({currency})
+      </Typography>
+
+      <TableContainer sx={{ maxHeight: 400 }}>
+        <Table stickyHeader size="small">
+          <TableHead>
+            <TableRow>
+              <TableCell sx={tableHeaderStyle}>Month</TableCell>
+              <TableCell sx={tableHeaderStyle}>Principal ({currency})</TableCell>
+              <TableCell sx={tableHeaderStyle}>Interest ({currency})</TableCell>
+              <TableCell sx={tableHeaderStyle}>Remaining Balance ({currency})</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
             {schedule.map((item) => (
-              <tr key={item.month} className="text-center">
-                <td className="border px-3 py-2">{item.month}</td>
-                <td className="border px-3 py-2">{item.principal} {currency}</td>
-                <td className="border px-3 py-2">{item.interest} {currency}</td>
-                <td className="border px-3 py-2">{item.remaining} {currency}</td>
-              </tr>
+              <TableRow key={item.month}>
+                <TableCell>{item.month}</TableCell>
+                <TableCell>{item.principal}</TableCell>
+                <TableCell>{item.interest}</TableCell>
+                <TableCell>{item.remaining}</TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Paper>
   );
 }
 

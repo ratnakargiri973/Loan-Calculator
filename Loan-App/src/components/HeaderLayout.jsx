@@ -36,15 +36,15 @@ function HeaderLayout() {
     <Box
       component="header"
       sx={{
-        bgcolor: theme.palette.background.headerBackgroundColor,
+        bgcolor: theme.palette.background.headerBackgroundColor || '#1976d2',
         display: 'flex',
-        justifyContent: 'space-between',
         alignItems: 'center',
         px: 2,
         py: 1,
         boxShadow: 2,
       }}
     >
+      {/* Left section: Logo and menu icon */}
       <Box display="flex" alignItems="center" gap={2}>
         {isSmallScreen && (
           <IconButton onClick={toggleDrawer(true)} sx={{ color: '#fff' }}>
@@ -56,7 +56,10 @@ function HeaderLayout() {
         </Typography>
       </Box>
 
+      {/* Middle Spacer */}
+      <Box sx={{ flexGrow: 1 }} />
 
+      {/* Navigation (only for medium and large screens) */}
       {!isSmallScreen && (
         <Box display="flex" alignItems="center" gap={2}>
           {navItems.map(({ label, to }, index) => {
@@ -71,10 +74,10 @@ function HeaderLayout() {
                   py: 1,
                   borderRadius: 1,
                   bgcolor: isActive
-                    ? theme.palette.background.buttonColor
+                    ? theme.palette.background.buttonColor || 'rgba(255,255,255,0.2)'
                     : 'transparent',
                   '&:hover': {
-                    bgcolor: 'rgba(30, 136, 229, 0.2)',
+                    bgcolor: 'rgba(255,255,255,0.2)',
                   },
                   color: '#fff',
                   textDecoration: 'none',
@@ -88,8 +91,8 @@ function HeaderLayout() {
         </Box>
       )}
 
-      
-      <Box>
+      {/* Theme Switch */}
+      <Box ml={2}>
         <Switch
           checked={mode === 'dark'}
           onChange={toggleTheme}
@@ -97,6 +100,7 @@ function HeaderLayout() {
         />
       </Box>
 
+      {/* Drawer for small screens */}
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         <Box
           width={250}
@@ -122,7 +126,7 @@ function HeaderLayout() {
                     '&:hover': {
                       bgcolor: 'rgba(30, 136, 229, 0.2)',
                     },
-                    color: isActive ? '#fff' : theme.palette.primary,
+                    color: isActive ? '#fff' : theme.palette.text.primary,
                     mb: 1,
                     textDecoration: 'none',
                   }}
