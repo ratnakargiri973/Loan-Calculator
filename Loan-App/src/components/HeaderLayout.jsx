@@ -44,7 +44,7 @@ function HeaderLayout() {
         boxShadow: 2,
       }}
     >
-      {/* Left section: Logo and menu icon */}
+      
       <Box display="flex" alignItems="center" gap={2}>
         {isSmallScreen && (
           <IconButton onClick={toggleDrawer(true)} sx={{ color: '#fff' }}>
@@ -56,10 +56,10 @@ function HeaderLayout() {
         </Typography>
       </Box>
 
-      {/* Middle Spacer */}
+     
       <Box sx={{ flexGrow: 1 }} />
 
-      {/* Navigation (only for medium and large screens) */}
+     
       {!isSmallScreen && (
         <Box display="flex" alignItems="center" gap={2}>
           {navItems.map(({ label, to }, index) => {
@@ -91,7 +91,7 @@ function HeaderLayout() {
         </Box>
       )}
 
-      {/* Theme Switch */}
+     
       <Box ml={2}>
         <Switch
           checked={mode === 'dark'}
@@ -100,7 +100,7 @@ function HeaderLayout() {
         />
       </Box>
 
-      {/* Drawer for small screens */}
+     
       <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
         <Box
           width={250}
