@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Container, Grid, TextField, Typography, Button } from '@mui/material';
-import EMICalculation from '../services/EMICalculation';
+import EMICalculation from './EMICalculation';
 
 function LoanCalculatorDashboard() {
   const [loanAmount, setLoanAmount] = useState(100000);
