@@ -1,17 +1,23 @@
-import React from 'react'
-import { Outlet } from 'react-router-dom'
-import HeaderLayout from './components/HeaderLayout'
+import React from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
+import HeaderLayout from './components/HeaderLayout';
 
 function App() {
+  const location = useLocation();
+
+  // Define routes where the header should be shown
+  const showHeaderRoutes = ['/', '/about', '/exchange_rates_live'];
+
+  const shouldShowHeader = showHeaderRoutes.includes(location.pathname);
 
   return (
     <>
-       <main>
-        <HeaderLayout />
+      <main>
+        {shouldShowHeader && <HeaderLayout />}
         <Outlet />
-       </main>
+      </main>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

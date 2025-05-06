@@ -20,7 +20,7 @@ function HeaderLayout() {
   const theme = useTheme();
   const { mode, toggleTheme } = useThemeToggle();
   const location = useLocation();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const navItems = [
